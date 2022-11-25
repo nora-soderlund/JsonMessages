@@ -10,10 +10,10 @@ A low effort, no time consuming, communication format for JSON objects through f
 ## Messages
   1. The first byte of a message should be the message header defined in the manifest.
   2. The second to second last byte of a message should be the payload.
-    -	The payload should contain the value of each property as defined in the message manifest, in the correct indexed order.
-    -	Each property should not have a type identifier, such as quotations for strings. Each property is read raw.
-    -	Each property should be seperated by a comma character (0x2C).
-    -	If a property contains a comma character, it should be suffixed with a backslash character to escape it.
+      -	The payload should contain the value of each property as defined in the message manifest, in the correct indexed order.
+      -	Each property should not have a type identifier, such as quotations for strings. Each property is read raw.
+      -	Each property should be seperated by a comma character (0x2C).
+      -	If a property contains a comma character, it should be suffixed with a backslash character to escape it.
   3. The last byte of a message should be a \0 character.
 
 ## Example
