@@ -18,10 +18,10 @@ A low effort, no time consuming, communication format for JSON objects through f
 
 ## Example
 ```
-*??*??b\,ar,ipsum|{"hey":"there"} // 33 bytes
+*??*??b\,ar,ipsum|*??there // 26 bytes
 ```
 ```js
-[{"foo":"b,ar","lorem":"ipsum"},"{\"hey\":\"there\"}"] // 54 bytes
+[{"foo":"b,ar","lorem":"ipsum"},{"hey":"there"}] // 48 bytes
 ```
 ```json
 [
@@ -29,6 +29,8 @@ A low effort, no time consuming, communication format for JSON objects through f
     "foo": "b,ar",
     "lorem": "ipsum"
   },
-  "{\"hey\":\"there\"}"
+  {
+    "hey": "there"
+  }
 ]
 ```
