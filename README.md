@@ -21,7 +21,7 @@ A low effort, no time consuming, communication format for JSON objects through f
 *??*??b\,ar,ipsum|{"hey":"there"} // 33 bytes
 ```
 ```js
-[{"foo":"b,ar","lorem":"ipsum"},{"hey":"there"}] // 48 bytes
+[{"foo":"b,ar","lorem":"ipsum"},"{\"hey\":\"there\"}"] // 54 bytes
 ```
 ```json
 [
