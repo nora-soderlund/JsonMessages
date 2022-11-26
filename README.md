@@ -18,19 +18,24 @@ A low effort, no time consuming, communication format for JSON objects through f
 
 ## Example
 ```
-*??*??b\,ar,ipsum|*??there // 26 bytes
+*??Swedish,SV|English,EN|Danish,DK // 34 bytes
 ```
 ```js
-[{"foo":"b,ar","lorem":"ipsum"},{"hey":"there"}] // 48 bytes
+[{"language":"Swedish","code":"SV"},{"language":"English","code":"EN"},{"language":"Danish","code":"DK"}] // 105 bytes
 ```
 ```json
 [
   {
-    "foo": "b,ar",
-    "lorem": "ipsum"
+    "language": "Swedish",
+    "code": "SV"
   },
   {
-    "hey": "there"
+    "language": "English",
+    "code": "EN"
+  },
+  {
+    "language": "Danish",
+    "code": "DK"
   }
 ]
 ```
