@@ -67,7 +67,7 @@ export default class JsonMessage {
     static #compressObject(manifest, structure, payload) {
         return structure.map((key) => {
             if(key.key == undefined)
-                return payload[key].replaceAll('|', '\\|').replaceAll(',', '\\,');
+                return String(payload[key]).replaceAll('|', '\\|').replaceAll(',', '\\,');
 
             if(payload[key.key] == undefined)
                 return "null";
@@ -112,9 +112,9 @@ export default class JsonMessage {
                 return null;
 
             if(typeof key == "string")
-                return object[key] = sections[index].replaceAll('\\|', '|').replaceAll('\\,', ',');
+                return object[key] = String(sections[index]).replaceAll('\\|', '|').replaceAll('\\,', ',');
 
-            object[key.key] = this.#decompressStructure(manifest, key, sections[index].replaceAll('\\|', '|').replaceAll('\\,', ','));
+            object[key.key] = this.#decompressStructure(manifest, key, String(sections[index]).replaceAll('\\|', '|').replaceAll('\\,', ','));
         });
 
         return object;
