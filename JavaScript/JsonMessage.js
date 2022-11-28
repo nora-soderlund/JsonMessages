@@ -66,10 +66,13 @@ export default class JsonMessage {
 
     static #compressObject(manifest, structure, payload) {
         return structure.map((key) => {
-            if(typeof payload[key] == "string")
-                return payload[key];
+            if(!payload[key.key])
+                return "null";
 
-            return this.#compressStructure(manifest, key, payload[key.key]).replace(',', '\\,');
+            if(typeof payload[key] == "string")
+                return payload[key].replaceAll('|', '\\|').replaceAll(',', '\\,');
+
+            return this.#compressStructure(manifest, key, payload[key.key]).replaceAll('|', '\\|').replaceAll(',', '\\,');
         }).join(',');
     };
 
@@ -78,6 +81,9 @@ export default class JsonMessage {
     };
 
     static #decompressStructure(manifest, structure, payload) {
+        if(!structure)
+            return null;
+
         if(structure.type == "structure")
             structure = this.#getManifestStructure(manifest, structure.key);
 
@@ -102,17 +108,23 @@ export default class JsonMessage {
         const object = {};
 
         structure.forEach((key, index) => {
-            if(typeof key == "string")
-                return object[key] = sections[index].replace('\\,', ',');
+            if(!sections[index])
+                return null;
 
-            object[key.key] = this.#decompressStructure(manifest, key, sections[index].replace('\\,', ','));
+            if(typeof key == "string")
+                return object[key] = sections[index].replaceAll('\\|', '|').replaceAll('\\,', ',');
+
+            object[key.key] = this.#decompressStructure(manifest, key, sections[index].replaceAll('\\|', '|').replaceAll('\\,', ','));
         });
 
         return object;
     };
 
     static #decompressArray(manifest, structure, payload) {
-        return this.#decompressSections(payload, '|').map((item) => this.#decompressStructure(manifest, structure, item.replace('\\|', '|')));
+        if(payload == "null")
+            return null;
+
+        return this.#decompressSections(payload, '|').map((item) => this.#decompressStructure(manifest, structure, item));
     };
 
     static #decompressSections(payload, seperator) {
