@@ -1,0 +1,25 @@
+{
+    "name": "@nora-soderlund/json-messages",
+    "version": "1.0.0",
+    "description": "A low effort, no time consuming, communication format for JSON web messages.",
+    "main": "exports.js",
+    "type": "module",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/nora-soderlund/json-messages.git"
+    },
+    "keywords": [
+        "json",
+        "websocket",
+        "api",
+        "communication",
+        "message",
+        "format"
+    ],
+    "author": "Nora Söderlund",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/nora-soderlund/json-messages/issues"
+    },
+    "homepage": "https://github.com/nora-soderlund/json-messages#readme"
+}
