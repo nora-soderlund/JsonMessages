@@ -1,12 +1,16 @@
 export default class JsonMessage {
-    static manifest = null;
+    static #manifest = null;
+
+    static setDefaultManifest(manifest) {
+        this.#manifest = manifest;
+    };
 
     static compress(manifest, header, payload) {
         // allow for compress(header, payload) if manifest is set
-        if(this.manifest != null && payload == undefined) {
+        if(this.#manifest != null && payload == undefined) {
             payload = header;
             header = manifest;
-            manifest = this.manifest;
+            manifest = this.#manifest;
         }
 
         const structure = this.#getManifestStructure(manifest, header);
@@ -17,9 +21,9 @@ export default class JsonMessage {
 
     static decompress(manifest, message) {
         // allow for decompress(message) is manifest is set
-        if(this.manifest != null && message == undefined) {
+        if(this.#manifest != null && message == undefined) {
             message = manifest;
-            manifest = this.manifest;
+            manifest = this.#manifest;
         }
 
         if(message[0] != '*')
