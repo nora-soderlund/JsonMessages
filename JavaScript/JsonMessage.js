@@ -22,6 +22,9 @@ export default class JsonMessage {
             manifest = this.manifest;
         }
 
+        if(message[0] != '*')
+            return null;
+
         const high = message.charCodeAt(1) & 0xFF;
         const low = message.charCodeAt(2) & 0xFF;
 
