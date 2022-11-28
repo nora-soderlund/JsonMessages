@@ -66,11 +66,11 @@ export default class JsonMessage {
 
     static #compressObject(manifest, structure, payload) {
         return structure.map((key) => {
-            if(!payload[key.key])
-                return "null";
-
-            if(typeof payload[key] == "string")
+            if(key.key == undefined)
                 return payload[key].replaceAll('|', '\\|').replaceAll(',', '\\,');
+
+            if(payload[key.key] == undefined)
+                return "null";
 
             return this.#compressStructure(manifest, key, payload[key.key]).replaceAll('|', '\\|').replaceAll(',', '\\,');
         }).join(',');

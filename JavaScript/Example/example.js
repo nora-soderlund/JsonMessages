@@ -1,4 +1,4 @@
-import JsonMessage from "./JsonMessage.js";
+import JsonMessage from "../JsonMessage.js";
 
 const manifest = [
     {
@@ -7,16 +7,7 @@ const manifest = [
         key: "CMD_TEST_OBJECT",
         type: "object",
 
-        properties: [
-            {
-                key: "foo",
-                type: "string"
-            },
-            {
-                key: "lorem",
-                type: "string"
-            }
-        ]
+        properties: [ "foo", "lorem" ]
     },
 
     {
@@ -63,73 +54,85 @@ const manifest = [
 
 JsonMessage.setDefaultManifest(manifest);
 
-const objects = [
-    {
-        language: "English",
-        code: "EN",
+{
+    const objects = [
+        {
+            language: "English",
+            code: "EN",
+    
+            relations: null
+        },
+    
+        {
+            language: "Swedish",
+            code: "SV",
+    
+            relations: [
+                {
+                    language: "Norwegian",
+                    code: "NO"
+                },
+    
+                {
+                    language: "Danish",
+                    code: "DK"
+                }
+            ]
+        },
+    
+        {
+            language: "Danish",
+            code: "DK",
+    
+            relations: [
+                {
+                    language: "Norwegian",
+                    code: "NO"
+                },
+                
+                {
+                    language: "Swedish",
+                    code: "SV"
+                }
+            ]
+        },
+    
+        {
+            language: "Norwegian",
+            code: "NO",
+    
+            relations: [
+                {
+                    language: "Danish",
+                    code: "DK"
+                },
+                
+                {
+                    language: "Swedish",
+                    code: "SV"
+                }
+            ]
+        }
+    ];
 
-        relations: null
-    },
+    const payload = JsonMessage.compress(manifest, "CMD_TEST_ARRAY", objects);
 
-    {
-        language: "Swedish",
-        code: "SV",
+    console.log("json:", JSON.stringify(objects));
+    console.log("payload:", payload);
+    console.log("message:", JsonMessage.decompress(payload));
+}
 
-        relations: [
-            {
-                language: "Norwegian",
-                code: "NO"
-            },
+console.log(" ");
 
-            {
-                language: "Danish",
-                code: "DK"
-            },
-            
-            {
-                language: "Swedish",
-                code: "SV"
-            }
-        ]
-    },
+{
+    const objects = {
+        foo: "bar",
+        lorem: "ipsum"
+    };
 
-    {
-        language: "Danish",
-        code: "DK",
+    const payload = JsonMessage.compress(manifest, "CMD_TEST_OBJECT", objects);
 
-        relations: [
-            {
-                language: "Norwegian",
-                code: "NO"
-            },
-            
-            {
-                language: "Swedish",
-                code: "SV"
-            }
-        ]
-    },
-
-    {
-        language: "Norwegian",
-        code: "NO",
-
-        relations: [
-            {
-                language: "Danish",
-                code: "DK"
-            },
-            
-            {
-                language: "Swedish",
-                code: "SV"
-            }
-        ]
-    }
-];
-
-const payload = JsonMessage.compress("CMD_TEST_ARRAY", objects);
-
-console.log("json:", JSON.stringify(objects));
-console.log("payload:", payload);
-console.log("message:", JsonMessage.decompress(payload));
+    console.log("json:", JSON.stringify(objects));
+    console.log("payload:", payload);
+    console.log("message:", JsonMessage.decompress(payload));
+}
