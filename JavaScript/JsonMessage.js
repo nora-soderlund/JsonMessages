@@ -1,6 +1,10 @@
 export default class JsonMessage {
     static #manifest = null;
 
+    static #polyfillReplaceAll(string, target, replacement) {
+        return string.split(target).join(replacement);
+    };
+
     static setDefaultManifest(manifest) {
         this.#manifest = manifest;
     };
@@ -75,12 +79,12 @@ export default class JsonMessage {
     static #compressObject(manifest, structure, payload) {
         return structure.map((key) => {
             if(key.key == undefined)
-                return String(payload[key]).replaceAll('|', '\\|').replaceAll(',', '\\,');
+                return this.#polyfillReplaceAll(this.#polyfillReplaceAll(String(payload[key]), '|', '\\|'), ',', '\\,');
 
             if(payload[key.key] == undefined)
                 return "null";
 
-            return this.#compressStructure(manifest, key, payload[key.key]).replaceAll('|', '\\|').replaceAll(',', '\\,');
+            return this.#polyfillReplaceAll(this.#polyfillReplaceAll(this.#compressStructure(manifest, key, payload[key.key]), '|', '\\|'), ',', '\\,');
         }).join(',');
     };
 
@@ -120,9 +124,9 @@ export default class JsonMessage {
                 return null;
 
             if(typeof key == "string")
-                return object[key] = String(sections[index]).replaceAll('\\|', '|').replaceAll('\\,', ',');
+                return object[key] = this.#polyfillReplaceAll(this.#polyfillReplaceAll(String(sections[index]), '\\|', '|'), '\\,', ',');
 
-            object[key.key] = this.#decompressStructure(manifest, key, String(sections[index]).replaceAll('\\|', '|').replaceAll('\\,', ','));
+            object[key.key] = this.#decompressStructure(manifest, key, this.#polyfillReplaceAll(this.#polyfillReplaceAll(String(sections[index]), '\\|', '|'), '\\,', ','));
         });
 
         return object;
