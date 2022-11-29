@@ -1,6 +1,6 @@
 {
     "name": "@nora-soderlund/json-messages",
-    "version": "1.0.4",
+    "version": "1.0.5",
     "description": "A low effort, no time consuming, communication format for JSON web messages.",
     "main": "exports.js",
     "type": "module",

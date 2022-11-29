@@ -36,8 +36,12 @@ export default class JsonMessage {
         const high = message.charCodeAt(1) & 0xFF;
         const low = message.charCodeAt(2) & 0xFF;
 
-        const structure = this.#getManifestStructure(manifest, (high << 8) | low);
-        const payload = this.#decompressStructure(manifest, structure, message.substring(3));
+        return this.decompressWithoutHeader(manifest, (high << 8) | low, message.substring(3));
+    };
+
+    static decompressWithoutHeader(manifest, header, message) {
+        const structure = this.#getManifestStructure(manifest, header);
+        const payload = this.#decompressStructure(manifest, structure, message);
 
         return payload;
     };
