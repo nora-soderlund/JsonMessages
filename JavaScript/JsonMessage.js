@@ -19,6 +19,10 @@ export default class JsonMessage {
         return ([ '*', String.fromCharCode((structure.header >> 8) & 0xFF), String.fromCharCode(structure.header & 0xFF) ]).concat(message).join('');
     };
 
+    static compressWithoutHeader(manifest, header, payload) {
+        return this.compress(manifest, header, payload).substring(3);
+    };
+
     static decompress(manifest, message) {
         // allow for decompress(message) is manifest is set
         if(this.#manifest != null && message == undefined) {
