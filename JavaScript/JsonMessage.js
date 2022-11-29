@@ -24,7 +24,7 @@ export default class JsonMessage {
     };
 
     static compressWithoutHeader(manifest, header, payload) {
-        return this.compress(manifest, header, payload).substring(3);
+        return '*' + this.compress(manifest, header, payload).substring(3);
     };
 
     static decompress(manifest, message) {
@@ -45,7 +45,7 @@ export default class JsonMessage {
 
     static decompressWithoutHeader(manifest, header, message) {
         const structure = this.#getManifestStructure(manifest, header);
-        const payload = this.#decompressStructure(manifest, structure, message);
+        const payload = this.#decompressStructure(manifest, structure, message.substring(1));
 
         return payload;
     };
